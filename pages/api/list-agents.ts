@@ -20,6 +20,7 @@ export default async function handler(
       version: (agentJson as any)?.info?.version || '1.0.0',
     }))
 
+    
     return res.status(200).json({
       success: true,
       agents,
