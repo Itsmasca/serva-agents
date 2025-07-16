@@ -10,18 +10,13 @@ export interface Project {
 }
 
 export const logProjectToPostgres = async (projectData: Omit<Project, 'created_at'>) => {
-  try {
-    const pool  = new Pool({
-            host: process.env.PGHOST,
-            user: process.env.PGUSER,
-            password: process.env.PGPASSWORD,
-            database: process.env.PGDATABASE,
-            port: 5432,
-            ssl: {
-                rejectUnauthorized: false,
-            }
-        })
-
+    const pool = new Pool({
+        connectionString: process.env.DB_URL,
+        ssl: {
+            rejectUnauthorized: false,
+        }
+    })
+    try {
         const cols = Object.keys(projectData);
         const values = Object.values(projectData);
         const placeholders = cols.map((_, i) => `$${i + 1}`)
@@ -38,8 +33,10 @@ export const logProjectToPostgres = async (projectData: Omit<Project, 'created_a
         );
 
         return result.rows[0];
-  } catch (error) {
-    console.error('Error logging to Supabase:', error)
-    throw error
-  }
+    } catch (error) {
+        console.error('Error logging to Supabase:', error)
+        throw error
+    } finally {
+        await pool.end();
+    }
 } 
