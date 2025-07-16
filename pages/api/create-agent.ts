@@ -107,6 +107,7 @@ export default async function handler(
         //   agent_json: agentResult.agentJson,
         //   vercel_url: deploymentUrl,
         // })
+        
         console.log('✅ Supabase Success - Logged project')
       } catch (supabaseError) {
         console.error('❌ Supabase logging failed (non-critical):', supabaseError)
