@@ -100,13 +100,13 @@ export default async function handler(
       const projectId = uuidv4()
       try {
         console.log('Step 4: Logging to Supabase...')
-        await logProjectToSupabase({
-          id: projectId,
-          name: projectName || 'My Agent',
-          description,
-          agent_json: agentResult.agentJson,
-          vercel_url: deploymentUrl,
-        })
+        // await logProjectToSupabase({
+        //   id: projectId,
+        //   name: projectName || 'My Agent',
+        //   description,
+        //   agent_json: agentResult.agentJson,
+        //   vercel_url: deploymentUrl,
+        // })
         console.log('✅ Supabase Success - Logged project')
       } catch (supabaseError) {
         console.error('❌ Supabase logging failed (non-critical):', supabaseError)
