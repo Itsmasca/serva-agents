@@ -9,6 +9,7 @@ export interface Project {
   created_at: string
 }
 
+
 export const logProjectToPostgres = async (projectData: Omit<Project, 'created_at'>) => {
     const pool = new Pool({
         connectionString: process.env.DB_URL,
