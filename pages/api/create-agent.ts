@@ -5,6 +5,7 @@ import { deployToVercel } from '../../lib/vercel'
 import { logProjectToSupabase } from '../../lib/supabase'
 import { storeAgentJson } from './ask-agent'
 import { v4 as uuidv4 } from 'uuid'
+import { logProjectToPostgres } from '@/lib/postgres'
 
 export default async function handler(
   req: NextApiRequest,
@@ -100,7 +101,7 @@ export default async function handler(
       const projectId = uuidv4()
       try {
         console.log('Step 4: Logging to Supabase...')
-        await logProjectToSupabase({
+        await logProjectToPostgres({
           id: projectId,
           name: projectName || 'My Agent',
           description,
