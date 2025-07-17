@@ -8,7 +8,7 @@
 export interface Project {
   id: string
   name: string
-  description: string
+  description: string 
   agent_json: any
   vercel_url: string
   created_at: string

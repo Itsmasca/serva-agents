@@ -51,7 +51,7 @@ export const deployToVercel = async (siteCode: string, projectName: string): Pro
       
       'next.config.js': `/** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   // No 'output: export'!
 };
 module.exports = nextConfig;`,
@@ -84,7 +84,7 @@ module.exports = {
           strict: false, // More lenient for generated code
           noEmit: true,
           esModuleInterop: true,
-          module: "esnext",
+          module: "es next",
           moduleResolution: "bundler",
           resolveJsonModule: true,
           isolatedModules: true,

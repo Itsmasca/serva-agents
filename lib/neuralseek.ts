@@ -22,6 +22,7 @@ interface NeuralSeekResponse {
   }>
 }
 
+
 export const createAgent = async (description: string): Promise<any> => {
   try {
     console.log('Calling NeuralSeek /maistro endpoint with description:', description)
