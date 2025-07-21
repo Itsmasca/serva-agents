@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { createAgent } from '../../lib/neuralseek'
-import { generateSiteCode } from '../../lib/openai'
+import { generateCode } from '@/lib/code_assistant'
 
 export default async function handler(
   req: NextApiRequest,
@@ -41,7 +41,7 @@ export default async function handler(
     // Step 2: Generate site code with OpenAI
     console.log('Step 2: Generating site code with OpenAI...')
     
-    const siteCode = await generateSiteCode(
+    const siteCode = await generateCode(
       agentResult.agentJson, 
       agentResult.agentName,
       agentResult.improvedPrompt

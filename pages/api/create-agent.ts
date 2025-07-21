@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { createAgent } from '../../lib/neuralseek'
-import { generateSiteCode } from '../../lib/openai'
 import { generateCode } from '@/lib/code_assistant'
 import { deployToVercel } from '../../lib/vercel'
 import { logProjectToSupabase } from '../../lib/supabase'
