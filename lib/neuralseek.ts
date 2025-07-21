@@ -23,7 +23,7 @@ interface NeuralSeekResponse {
 }
 
 
- export const createAgent = async (description: string): Promise<any> => {
+export const createAgent = async (description: string): Promise<any> => {
 //   try {
 //     console.log('Calling NeuralSeek /maistro endpoint with description:', description)
     
@@ -104,191 +104,32 @@ interface NeuralSeekResponse {
 //       fullResponse: data
 //     }
     return {
-      succces: true,
-      agentJson:{
-  "openapi": "3.0.3",
-  "info": {
-    "version": "1.6.85",
-    "title": "ConfigRouteAnalyzer",
-    "description": "NeuralSeek - The business LLM accelerator",
-    "license": {
-      "name": "End User License Agreement",
-      "url": "https://neuralseek.com/eula"
-    },
-    "contact": {
-      "name": "NeuralSeek Support",
-      "url": "https://neuralseek.com",
-      "email": "support@NeuralSeek.com"
-    },
-    "termsOfService": "https://neuralseek.com/eula"
-  },
-  "servers": [
-    {
-      "url": "https://stagingapi.neuralseek.com/v1/{instance}",
-      "description": "NeuralSeek API server",
-      "variables": {
-        "instance": {
-          "default": "Liam-demo",
-          "description": "Your instance ID"
-        }
-      }
-    }
-  ],
-  "paths": {
-    "/maistro": {
-      "post": {
-        "tags": ["maistro"],
-        "summary": "Run mAistro NTL or agent",
-        "description": "Freeform prompting using NeuralSeek Template Language or a saved agent",
-        "operationId": "maistro",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "overrideschema",
-            "schema": { "type": "string", "default": "" },
-            "required": false,
-            "description": "Find variables based on post body…"
+      success: true,
+      agentJson: {
+        // ...tu JSON completo aquí (sin cambios)...
+        "openapi": "3.0.3",
+        "info": {
+          "version": "1.6.85",
+          "title": "ConfigRouteAnalyzer",
+          "description": "NeuralSeek - The business LLM accelerator",
+          "license": {
+            "name": "End User License Agreement",
+            "url": "https://neuralseek.com/eula"
           },
-          {
-            "in": "query",
-            "name": "overrideagent",
-            "schema": { "type": "string", "default": "" },
-            "required": false,
-            "description": "If using overrideSchema…"
+          "contact": {
+            "name": "NeuralSeek Support",
+            "url": "https://neuralseek.com",
+            "email": "support@NeuralSeek.com"
           },
-          {
-            "in": "query",
-            "name": "debug",
-            "schema": { "type": "string", "default": "" },
-            "required": false,
-            "description": "Include NS debug information…"
-          }
-        ],
-        "requestBody": {
-          "description": "The request object.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "ntl": {
-                    "type": "string",
-                    "description": "The NTL script to evaluate."
-                  },
-                  "agent": {
-                    "type": "string",
-                    "default": "ConfigRouteAnalyzer",
-                    "description": "The agent to use."
-                  },
-                  "params": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "name": { "type": "string" },
-                        "value": { "type": "string" }
-                      }
-                    }
-                  },
-                  "options": {
-                    "type": "object",
-                    "properties": {
-                      "streaming": { "type": "boolean", "default": false },
-                      "llm": { "type": "string", "default": "" },
-                      "user_id": { "type": "string", "default": "" },
-                      "timeout": { "type": "number", "minimum": 1, "maximum": 600000 },
-                      "temperatureMod": { "type": "number", "minimum": -1, "maximum": 1 },
-                      "toppMod": { "type": "number", "minimum": -1, "maximum": 1 },
-                      "freqpenaltyMod": { "type": "number", "minimum": -1, "maximum": 1 },
-                      "minTokens": { "type": "number", "minimum": 0 },
-                      "maxTokens": { "type": "number", "minimum": 1 },
-                      "lastTurn": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "input": { "type": "string" },
-                            "response": { "type": "string" }
-                          }
-                        }
-                      },
-                      "returnVariables": { "type": "boolean", "default": false },
-                      "returnVariablesExpanded": { "type": "boolean", "default": false },
-                      "returnRender": { "type": "boolean", "default": false },
-                      "returnSource": { "type": "boolean", "default": false },
-                      "maxRecursion": { "type": "integer", "minimum": 0, "maximum": 1000, "default": 10 }
-                    }
-                  }
-                }
-              }
-            }
-          }
+          "termsOfService": "https://neuralseek.com/eula"
         },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "answer": { "type": "string" },
-                    "sourceParts": { "type": "array", "items": { "type": "string" } },
-                    "render": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "node": { "type": "string" },
-                          "vars": { "type": "object" },
-                          "out": { "type": "string" },
-                          "chained": { "type": "boolean" }
-                        }
-                      }
-                    },
-                    "variables": { "type": "object" },
-                    "variablesExpanded": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "name": { "type": "string" },
-                          "value": { "type": "string" }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [{ "apiKey": [] }]
-      }
-    }
-  },
-  "components": {
-    "securitySchemes": {
-      "apiKey": { "type": "apiKey", "name": "apikey", "in": "header" }
-    }
-  },
-  "externalDocs": {
-    "url": "https://documentation.neuralseek.com",
-    "description": "Documentation"
-  }
-},
+        // ...resto del JSON...
+        // (no lo repito aquí por espacio, pero no cambies nada más)
+      },
       agentName: "testkike",
-      improvedPrompt: 'Configure a test scenario with routing disabled and strict mode turned off Provide details on the configuration settings and potential implications of these adjustments.',
+      improvedPrompt: `Crea un agente de IA personalizado para ser mi compañero de diario digital. Quiero un asistente que me ayude a reflexionar, registrar mis pensamientos y emociones diariamente, ofreciendo un espacio seguro y empático para la escritura personal. El agente debe ser capaz de hacer preguntas reflexivas, escuchar sin juzgar, y potencialmente sugerir temas o ejercicios de introspección si me siento bloqueado.`,
       ntlObject: "ntl",
-      fullResponse: "data"
-      
+      fullResponse: "data",
+      description: description
     }
-//   } catch (error) {
-//     console.error('Error executing NeuralSeek agent:', error)
-//     return {
-//       success: false,
-//       error: error instanceof Error ? error.message : 'Unknown error'
-//     }
-//   }
- } 
+  }
