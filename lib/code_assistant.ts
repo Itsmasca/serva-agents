@@ -16,6 +16,7 @@ export const generateCode = async (agentJson: any, agentName?: string, improvedP
         console.log('Agent JSON info.title:', agentJson?.info?.title)
         console.log('Agent JSON info.description:', agentJson?.info?.description)
         console.log('Agent JSON paths count:', Object.keys(agentJson?.paths || {}).length) 
+
         const response = await fetch('https://codeassistant-production.up.railway.app/generate-code',
             {
                 method: 'POST',
@@ -69,4 +70,3 @@ export const generateCode = async (agentJson: any, agentName?: string, improvedP
             }
         }
 }
-
