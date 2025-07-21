@@ -39,11 +39,14 @@ export const generateCode = async (agentJson: any, agentName?: string, improvedP
         let imports = null
         let code = null
         let fullCode = ''
+        if (!data.variables || !data.variables.code || data.variables.code.includes('Basic Chatbot Template')) {
+            throw new Error('Code Assistant did not generate a personalized agent. Please try again.')
+        }
         if (data.variables) {
             prefix = data.variables.prefix || null
             imports = data.variables.imports || []
             code = data.variables.code || ''
-            if (prefix) fullCode += prefix + '\n'
+            if (prefix) prefix + '\n'
             if (imports && imports.length > 0) fullCode += imports.join('\n') + '\n'
             if (code) fullCode += code
         } else {
