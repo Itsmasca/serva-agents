@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { createAgent } from '../../lib/neuralseek'
 import { generateSiteCode } from '../../lib/openai'
+import { generateCode } from '@/lib/code_assistant'
 import { deployToVercel } from '../../lib/vercel'
 import { logProjectToSupabase } from '../../lib/supabase'
 import { storeAgentJson } from './ask-agent'
@@ -69,7 +70,7 @@ export default async function handler(
     console.log('Input to OpenAI - Agent Name:', agentResult.agentName)
     console.log('Input to OpenAI - Improved Prompt:', agentResult.improvedPrompt)
     
-    const siteCode = await generateSiteCode(
+    const siteCode = await generateCode(
       agentResult.agentJson,
       agentResult.agentName,
       agentResult.improvedPrompt
@@ -93,7 +94,7 @@ export default async function handler(
     console.log('Full code length being deployed:', siteCode.length)
     
     try {
-      const deploymentUrl = await deployToVercel(siteCode, projectName || 'My Agent')
+      const deploymentUrl = await deployToVercel(siteCode.fullCode, projectName || 'My Agent')
       console.log('✅ Vercel Success - Deployed to:', deploymentUrl)
 
       // Step 4: Log to Supabase
