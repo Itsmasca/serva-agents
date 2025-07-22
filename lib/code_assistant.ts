@@ -32,7 +32,8 @@ export const generateCode = async (
                 input: "agent",
                 agentName,
                 improvedPrompt,
-                agentJson
+                agentJson: JSON.stringify(agentJson) // <-- aquí
+
                 })
             })
         if (!response.ok) {
