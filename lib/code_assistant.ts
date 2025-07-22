@@ -21,7 +21,7 @@ export const generateCode = async (
         console.log('Agent JSON info.description:', agentJson?.info?.description)
         console.log('Agent JSON paths count:', Object.keys(agentJson?.paths || {}).length) 
 
-        const response = await fetch('https://codeassistant-production.up.railway.app/agents/generate-code',
+        const response = await fetch('https://codeassistant-production.up.railway.app/agents/secure/generate-code',
             {
                 method: 'POST',
                 headers: {
