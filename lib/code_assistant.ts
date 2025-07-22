@@ -1,10 +1,11 @@
 interface CodeAssistantResponse {
-    answer: string
+    agentName: string
     variables?: {
         prefix?: string
         imports?: string[]
         code?: string
     }
+    messages?: any[]
 }
 export const generateCode = async (agentJson: any, agentName?: string, improvedPrompt?: string): Promise<any> => {
     try{
@@ -17,7 +18,7 @@ export const generateCode = async (agentJson: any, agentName?: string, improvedP
         console.log('Agent JSON info.description:', agentJson?.info?.description)
         console.log('Agent JSON paths count:', Object.keys(agentJson?.paths || {}).length) 
 
-        const response = await fetch('https://codeassistant-production.up.railway.app/generate-code',
+        const response = await fetch('https://codeassistant-production.up.railway.app/agents/generate-code',
             {
                 method: 'POST',
                 headers: {
@@ -25,9 +26,10 @@ export const generateCode = async (agentJson: any, agentName?: string, improvedP
                     'Authorization': `Bearer ${process.env.CODE_ASSISTANT_API_KEY}`
                 },
                 body: JSON.stringify({
-                    agentJson,
-                    agentName,
-                    improvedPrompt
+                    input:"agent",
+                    agentName: agentName,
+                    improvedPrompt: improvedPrompt,
+                    agentJson: agentJson
                 })
             })
         if (!response.ok) {
@@ -63,7 +65,7 @@ export const generateCode = async (agentJson: any, agentName?: string, improvedP
             prefix,
             imports,
             code,
-            fullCode // <-- Devuelve el código ensamblado
+            fullCode 
         }
     } catch (error) {
             console.error('Error executing CodeAssistant  agent:', error)
