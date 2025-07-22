@@ -1,13 +1,16 @@
 interface CodeAssistantResponse {
     agentName: string
-    variables?: {
+    generation?: {
         prefix?: string
         imports?: string[]
         code?: string
     }
     messages?: any[]
 }
-export const generateCode = async (agentJson: any, agentName?: string, improvedPrompt?: string): Promise<any> => {
+export const generateCode = async (
+    agentJson: any, 
+    agentName?: string, 
+    improvedPrompt?: string): Promise<any> => {
     try{
         console.log('=== GPT CODE GENERATION DEBUG ===')
         console.log('Agent Name received:', agentName)
@@ -36,36 +39,24 @@ export const generateCode = async (agentJson: any, agentName?: string, improvedP
             const errorText = await response.text()
             throw new Error(`Code Assistant API error: ${response.status} - ${errorText}`)
         }
-        const data: CodeAssistantResponse = await response.json()  
-        let prefix = null
-        let imports = null
-        let code = null
-        let fullCode = ''
-        if (!data.variables || !data.variables.code || data.variables.code.includes('Basic Chatbot Template')) {
+        const data: CodeAssistantResponse = await response.json()
+        const { generation } = data
+        if (!generation || !generation.code || generation.code.includes('Basic Chatbot Template')) {
             throw new Error('Code Assistant did not generate a personalized agent. Please try again.')
-        }
-        if (data.variables) {
-            prefix = data.variables.prefix || null
-            imports = data.variables.imports || []
-            code = data.variables.code || ''
-            if (prefix) prefix + '\n'
-            if (imports && imports.length > 0) fullCode += imports.join('\n') + '\n'
-            if (code) fullCode += code
-        } else {
-            code = data.answer || ''
-            fullCode = code
-        }
-        console.log('Code generated successfully:', {
-            prefix,
-            imports,
-            codeLength: code.length
-        })
+        } 
+        let fullCode = ''
+        if (generation.prefix) fullCode += generation.prefix + '\n'
+        if (generation.imports && generation.imports.length > 0) fullCode += generation.imports.join('\n') + '\n'
+        if (generation.code) fullCode += generation.code
+
         return {
             success: true,
-            prefix,
-            imports,
-            code,
-            fullCode 
+            agentName: data.agentName,
+            prefix: generation.prefix,
+            imports: generation.imports,
+            code: generation.code,
+            fullCode,
+            messages: data.messages || []
         }
     } catch (error) {
             console.error('Error executing CodeAssistant  agent:', error)
