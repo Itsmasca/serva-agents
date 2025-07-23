@@ -96,7 +96,10 @@ export const generateCode = async (
                     'Authorization': `Bearer ${process.env.CODE_ASSISTANT_API_KEY}`
                 },
                 body: JSON.stringify({
-                input: prompt
+                // input: prompt,
+                agent_json: agentJson,
+                agent_name: agentName || 'Custom Agent',
+                improved_prompt: improvedPrompt || ''
                 })
             })
         if (!response.ok) {
